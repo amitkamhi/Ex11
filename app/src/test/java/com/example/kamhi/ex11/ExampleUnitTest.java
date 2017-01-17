@@ -1,4 +1,4 @@
-package com.example.kamhi.ex10;
+package com.example.kamhi.ex11;
 
 import org.junit.Test;
 

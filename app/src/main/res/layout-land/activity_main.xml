@@ -8,7 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.kamhi.ex10.MainActivity">
+    tools:context="com.example.kamhi.ex11.MainActivity">
 
     <fragment
         android:layout_width="340dp"
@@ -16,7 +16,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:id="@+id/fragmentB"
-        class="com.example.kamhi.ex10.FragB">
+        class="com.example.kamhi.ex11.FragB">
 
     </fragment>
 
@@ -26,7 +26,7 @@
         android:id="@+id/fragmentA"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        class="com.example.kamhi.ex10.FragA">
+        class="com.example.kamhi.ex11.FragA">
     </fragment>
 
 </RelativeLayout>

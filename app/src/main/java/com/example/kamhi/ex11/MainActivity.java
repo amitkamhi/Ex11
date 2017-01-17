@@ -1,10 +1,9 @@
-package com.example.kamhi.ex10;
+package com.example.kamhi.ex11;
 
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.res.Configuration;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 public class MainActivity extends Activity implements FragA.ClickHandler, FragB.DataReporter{
