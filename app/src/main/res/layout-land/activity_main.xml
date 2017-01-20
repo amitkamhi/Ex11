@@ -8,25 +8,25 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.kamhi.ex11.MainActivity">
+    tools:context="com.example.kamhi.ex11.View.MainActivity">
 
     <fragment
         android:layout_width="340dp"
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:id="@+id/fragmentB"
-        class="com.example.kamhi.ex11.FragB">
+        android:id="@+id/detailsFragment"
+        class="com.example.kamhi.ex11.View.DetailsFragment">
 
     </fragment>
 
     <fragment
         android:layout_width="200dp"
         android:layout_height="match_parent"
-        android:id="@+id/fragmentA"
+        android:id="@+id/itemsFragment"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        class="com.example.kamhi.ex11.FragA">
+        class="com.example.kamhi.ex11.View.ItemsFragment">
     </fragment>
 
 </RelativeLayout>

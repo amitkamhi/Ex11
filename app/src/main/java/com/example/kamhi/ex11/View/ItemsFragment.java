@@ -1,24 +1,29 @@
-package com.example.kamhi.ex11;
+package com.example.kamhi.ex11.View;
 
 import android.app.Fragment;
+import android.app.ListFragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
+
+import com.example.kamhi.ex11.Model.Country;
+import com.example.kamhi.ex11.R;
 
 /**
  * Created by Kamhi on 3/1/2017.
  */
 
-public class FragA extends Fragment implements View.OnClickListener{
+public class ItemsFragment extends ListFragment{
 
-    ClickHandler listener;
+    CountryselectList listener;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         try {
-            this.listener = (ClickHandler)getActivity();
+            this.listener = (CountryselectList) getActivity();
         }
         catch (ClassCastException e){
             throw new ClassCastException("The class " + getActivity().getClass().getName() + " must implements the interfase 'ClickHandler");
@@ -27,25 +32,23 @@ public class FragA extends Fragment implements View.OnClickListener{
         super.onActivityCreated(savedInstanceState);
     }
 
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        view.findViewById(R.id.poshMe).setOnClickListener(this);
-        super.onViewCreated(view, savedInstanceState);
-    }
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.frag_a, container, false);
+        return inflater.inflate(R.layout.items_frag, container, false);
     }
+
 
     @Override
-    public void onClick(View v) {
-        this.listener.onClickEvent();
+    public void onListItemClick(ListView l, View v, int position, long id) {
+        getListView().setSelector(android.R.color.holo_blue_dark);
     }
 
 
-    public interface ClickHandler{
-        public void onClickEvent();
+
+    public interface CountryselectList{
+        public void onCountryChange(int position, Country country);
+        public int getCurrentSelection();
+        public void setInitCountry(Country country);
     }
 }
