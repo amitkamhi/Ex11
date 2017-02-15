@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Ex11</string>
+    <string name="catchMyDialog">Hosting activity must implement the interface ResultListener</string>
+    <string name="chose">Chose a country to add to the list</string>
+    <string name="delete">Are you sure you want to delete this country?></string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 </resources>

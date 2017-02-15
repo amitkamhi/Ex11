@@ -1,10 +1,12 @@
 package com.example.kamhi.ex11.Model;
 
+import java.util.Comparator;
+
 /**
  * Created by Kamhi on 20/1/2017.
  */
 
-public class Country {
+public class Country{
     private String name;
     private String flag;
     private String details;
@@ -52,6 +54,11 @@ public class Country {
 
     @Override
     public String toString() {
-        return "Country name:" + name;
+        return name;
+    }
+
+
+    public int compare(Country other) {
+        return this.getName().compareTo(other.getName());
     }
 }
