@@ -19,30 +19,40 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.kamhi.ex11.Controller.CountryAdapter;
+import com.example.kamhi.ex11.Controller.MyDialog;
 import com.example.kamhi.ex11.Model.Country;
 import com.example.kamhi.ex11.Model.DataLoader;
 import com.example.kamhi.ex11.R;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 
 /**
  * Created by Kamhi on 3/1/2017.
  */
 
-public class ItemsFragment extends ListFragment{
+public class ItemsFragment extends ListFragment implements MyDialog.ResultsListener, CountryAdapter.CountryAdapterListener {
 
     CountryselectList listener;
     Context context;
     CountryAdapter adapter;
+    static ArrayList<String> countries = new ArrayList<String>();
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         this.context = getActivity();
+        if (savedInstanceState != null){
+            countries = savedInstanceState.getStringArrayList("shownCountries");
+        }
+        else if (countries == null){
+            countries = new ArrayList<String>();
+        }
         try {
             this.listener = (CountryselectList) getActivity();
-            this.adapter = new CountryAdapter(this.context);
+            this.adapter = new CountryAdapter(getActivity(), countries, this);
             this.adapter.sort(new Comparator<Country>() {
                 @Override
                 public int compare(Country o1, Country o2) {
@@ -52,8 +62,7 @@ public class ItemsFragment extends ListFragment{
             setListAdapter(this.adapter);
 
             final int selectPosition = listener.getCurrentSelection();
-
-            getListView().postDelayed(new Runnable() {
+            /*getListView().postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     if(selectPosition != -1){
@@ -62,37 +71,11 @@ public class ItemsFragment extends ListFragment{
                         getListView().setSelector(android.R.color.holo_blue_dark);
                     }
                 }
-            }, 100);
+            }, 100);*/
 
             if(selectPosition !=-1){
                 listener.setInitCountry(this.adapter.getItem(selectPosition));
             }
-            /*
-            getListView().setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-                @Override
-                public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
-                                               int pos, long id) {
-
-                    new AlertDialog.Builder(getActivity())
-                            .setTitle("Delete?")
-                            .setMessage("Are you sure you want to delete this country?")
-                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-
-
-                                }
-                            })
-                            .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    return;
-                                }
-                            });
-
-                    return true;
-                }
-            });*/
         }
         catch (ClassCastException e){
             throw new ClassCastException("The class " + getActivity().getClass().getName() + " must implements the interfase 'ClickHandler");
@@ -103,14 +86,37 @@ public class ItemsFragment extends ListFragment{
     }
 
     @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putStringArrayList("shownCountries", countries);
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.main, menu);
-        super.onCreateOptionsMenu(menu, inflater);
+        if(menu.findItem(R.id.addCountry) == null){
+            inflater.inflate(R.menu.main, menu);
+        };
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        return super.onOptionsItemSelected(item);
+        int id = item.getItemId();
+        switch (id){
+            case R.id.addCountry:{
+                MyDialog.newInstance(MyDialog.ADD).show(getChildFragmentManager(), null);
+                return true;
+            }
+            default:{
+                return super.onOptionsItemSelected(item);
+            }
+
+        }
+    }
+
+
+    public ArrayList<String> getMissingCountry()
+    {
+        return adapter.getMissingCountries(countries);
     }
 
     @Nullable
@@ -120,32 +126,31 @@ public class ItemsFragment extends ListFragment{
         return inflater.inflate(R.layout.items_frag, container, false);
     }
 
-
     @Override
     public void onListItemClick(final ListView l, View v, final int position, long id) {
-        /*v.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(final View v) {
-                new AlertDialog.Builder(getActivity())
-                        .setTitle("Delete?")
-                        .setMessage("Are you sure you want to delete this country?")
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                l.removeView(v);
-                            }
-                        })
-                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                return;
-                            }
-                        });
-                return false;
-            }
-        });*/
         getListView().setSelector(android.R.color.holo_blue_dark);
         listener.onCountryChange(position, this.adapter.getItem(position));
+    }
+
+    @Override
+    public void OnfinishDialog(int requestCode, Object result) {
+        switch (requestCode){
+            case MyDialog.ADD:
+                adapter.addNewCountry(result.toString());
+                break;
+            case MyDialog.EXIT_DIALOG:
+                break;
+        }
+    }
+
+    @Override
+    public void updateShownList(boolean toAdd, String countryName) {
+        if (toAdd){
+            countries.add(countryName);
+        }
+        else {
+            countries.remove(countryName);
+        }
     }
 
     public interface CountryselectList{

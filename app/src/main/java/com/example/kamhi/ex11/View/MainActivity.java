@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class MainActivity extends Activity implements ItemsFragment.CountryselectList, DetailsFragment.CountryReporter, MyDialog.DialogListener {
+public class MainActivity extends Activity implements ItemsFragment.CountryselectList, DetailsFragment.CountryReporter, MyDialog.ResultsListener {
 
     private int position = -1;
     private Country country;
@@ -110,8 +110,9 @@ public class MainActivity extends Activity implements ItemsFragment.Countryselec
         return this.country;
     }
 
+
     @Override
-    public String onFinishedDialog(){
-        return null;
+    public void OnfinishDialog(int requestCode, Object result) {
+
     }
 }

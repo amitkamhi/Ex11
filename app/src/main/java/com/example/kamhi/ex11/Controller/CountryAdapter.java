@@ -19,13 +19,15 @@ import java.util.ArrayList;
  * Created by Kamhi on 31/1/2017.
  */
 public class CountryAdapter extends ArrayAdapter<Country> {
+    CountryAdapter.CountryAdapterListener listener;
     ArrayList<Country> countries;
     Context context;
-    public CountryAdapter(Context context) {
+    public CountryAdapter(Context context, ArrayList<String> showedCountries, CountryAdapter.CountryAdapterListener listener) {
         super(context, R.layout.row_item);
         this.context = context;
-        countries = new ArrayList<>(DataLoader.getCountries());
-        this.addAll(countries);
+        this.listener = listener;
+        this.countries = DataLoader.getCountries();
+        FeedShowedCountries(showedCountries);
     }
     @Override
     public View getView(int position, View convertView, ViewGroup parent)
@@ -46,6 +48,25 @@ public class CountryAdapter extends ArrayAdapter<Country> {
         imageView.setImageResource(imageResource);
         return convertView;
     }
+
+    private void FeedShowedCountries(ArrayList<String> showedCountries){
+        for (Country country : countries){
+            if(showedCountries.contains(country.getName())){
+                this.add(country);
+            }
+        }
+    }
+
+    public void addNewCountry(String countryName){
+        for(Country country:countries){
+            if(country.getName().equals(countryName)){
+                this.add(country);
+                listener.updateShownList(true, countryName);
+                break;
+            }
+        }
+    }
+
     public ArrayList<String> getMissingCountries(ArrayList<String> countries)
     {
         ArrayList<String> missing = new ArrayList<>();
@@ -57,6 +78,10 @@ public class CountryAdapter extends ArrayAdapter<Country> {
             }
         }
         return missing;
+    }
+
+    public  interface CountryAdapterListener{
+        public void updateShownList(boolean toAdd, String countryName);
     }
 
 }
