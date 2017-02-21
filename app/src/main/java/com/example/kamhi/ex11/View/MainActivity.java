@@ -1,33 +1,17 @@
 package com.example.kamhi.ex11.View;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.res.Configuration;
-import android.net.Uri;
 import android.os.Bundle;
-import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
 
-import com.example.kamhi.ex11.Controller.MyDialog;
-import com.example.kamhi.ex11.Controller.MyListView;
 import com.example.kamhi.ex11.Model.Country;
-import com.example.kamhi.ex11.Model.DataLoader;
-import com.example.kamhi.ex11.Model.XMLParser;
 import com.example.kamhi.ex11.R;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-public class MainActivity extends Activity implements ItemsFragment.CountryselectList, DetailsFragment.CountryReporter, MyDialog.ResultsListener {
+public class MainActivity extends Activity implements ItemsFragment.CountryselectList, DetailsFragment.CountryReporter, MyDialog.ResultsListener, FragmentManager.OnBackStackChangedListener {
 
     private int position = -1;
     private Country country;
@@ -57,16 +41,16 @@ public class MainActivity extends Activity implements ItemsFragment.Countryselec
             position = savedInstanceState.getInt("position");
         }
 
-        if(getResources().getConfiguration().orientation== Configuration.ORIENTATION_PORTRAIT)
+      /*  if(getResources().getConfiguration().orientation== Configuration.ORIENTATION_PORTRAIT)
         {
             FragmentManager fm = getFragmentManager();
-            if(savedInstanceState != null && fm.findFragmentByTag("AAA")!=null)
+            if(savedInstanceState != null && fm.findFragmentByTag("items")!=null)
             {
                 return;
             }
             FragmentTransaction ft = fm.beginTransaction();
-            ft.add(R.id.fragContainer, new ItemsFragment(), "AAA").commit();
-        }
+            ft.add(R.id.fragContainer, new ItemsFragment(), "items").commit();
+        }*/
     }
 
     @Override
@@ -97,6 +81,9 @@ public class MainActivity extends Activity implements ItemsFragment.Countryselec
     @Override
     public void setInitCountry(Country country) {
         this.country = country;
+        if(country == null){
+            position = -1;
+        }
         if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
             DetailsFragment detailsFragment =  (DetailsFragment) getFragmentManager().findFragmentById(R.id.detailsFragment);
             if(detailsFragment.isVisible()){
@@ -114,5 +101,18 @@ public class MainActivity extends Activity implements ItemsFragment.Countryselec
     @Override
     public void OnfinishDialog(int requestCode, Object result) {
 
+    }
+
+    @Override
+    public void onBackStackChanged() {
+        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
+            ItemsFragment iFragment = (ItemsFragment) getFragmentManager().findFragmentByTag("items");
+            if(getFragmentManager().getBackStackEntryCount() == 0){
+                iFragment.setMenuState(false);
+            }
+            else{
+                iFragment.setMenuState(true);
+            }
+        }
     }
 }

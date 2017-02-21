@@ -1,14 +1,9 @@
 package com.example.kamhi.ex11.View;
 
-import android.app.AlertDialog;
-import android.app.Fragment;
 import android.app.ListFragment;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,15 +11,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.example.kamhi.ex11.Controller.CountryAdapter;
-import com.example.kamhi.ex11.Controller.MyDialog;
 import com.example.kamhi.ex11.Model.Country;
-import com.example.kamhi.ex11.Model.DataLoader;
 import com.example.kamhi.ex11.R;
 
 import java.util.ArrayList;
@@ -40,6 +30,7 @@ public class ItemsFragment extends ListFragment implements MyDialog.ResultsListe
     Context context;
     CountryAdapter adapter;
     static ArrayList<String> countries = new ArrayList<String>();
+    Menu fragMenu;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -76,6 +67,15 @@ public class ItemsFragment extends ListFragment implements MyDialog.ResultsListe
             if(selectPosition !=-1){
                 listener.setInitCountry(this.adapter.getItem(selectPosition));
             }
+
+            getListView().setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                @Override
+                public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                    adapter.OnItemLongClick(position);
+                    listener.setInitCountry(null);
+                    return true;
+                }
+            });
         }
         catch (ClassCastException e){
             throw new ClassCastException("The class " + getActivity().getClass().getName() + " must implements the interfase 'ClickHandler");
@@ -93,6 +93,7 @@ public class ItemsFragment extends ListFragment implements MyDialog.ResultsListe
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        this.fragMenu = menu;
         if(menu.findItem(R.id.addCountry) == null){
             inflater.inflate(R.menu.main, menu);
         };
@@ -151,6 +152,9 @@ public class ItemsFragment extends ListFragment implements MyDialog.ResultsListe
         else {
             countries.remove(countryName);
         }
+    }
+    public void setMenuState(boolean hidden){
+        fragMenu.findItem(R.id.addCountry).setVisible(!hidden);
     }
 
     public interface CountryselectList{

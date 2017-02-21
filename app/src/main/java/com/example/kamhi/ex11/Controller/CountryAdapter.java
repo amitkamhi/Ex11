@@ -80,6 +80,12 @@ public class CountryAdapter extends ArrayAdapter<Country> {
         return missing;
     }
 
+    public void OnItemLongClick(int position){
+        Country country = getItem((position));
+        remove(country);
+        listener.updateShownList(false, country.getName());
+    }
+
     public  interface CountryAdapterListener{
         public void updateShownList(boolean toAdd, String countryName);
     }

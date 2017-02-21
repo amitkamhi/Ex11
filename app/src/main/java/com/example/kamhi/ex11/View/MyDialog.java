@@ -1,4 +1,4 @@
-package com.example.kamhi.ex11.Controller;
+package com.example.kamhi.ex11.View;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -9,12 +9,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.SeekBar;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import com.example.kamhi.ex11.R;
-import com.example.kamhi.ex11.View.ItemsFragment;
 
 /**
  * Created by Kamhi on 16/12/2016.

@@ -38,14 +38,12 @@ public class DetailsFragment extends Fragment{
         {
             this.listener = (CountryReporter)getActivity();
             Country country = listener.getCountryData();
-            if(null != country)
-            {
+            if(null != country){
                 changeTo(country);
 
             }
 
-        }catch (ClassCastException e)
-        {
+        }catch (ClassCastException e){
             throw new ClassCastException("The class" + getActivity().getClass().getName() + " must impliments the inteface 'clickHandler' ");
         }
 
@@ -59,14 +57,6 @@ public class DetailsFragment extends Fragment{
         if(mediaPlayer!=null)
             mediaPlayer.pause();
     }
-    /*
-        @Override
-        public void onStart() {
-            if(mediaPlayer!=null)
-                mediaPlayer.start();
-            super.onStart();
-        }
-        */
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         this.tvDetails = (TextView) view.findViewById(R.id.details);
@@ -85,6 +75,16 @@ public class DetailsFragment extends Fragment{
     }
     //changeTo
     public void changeTo(Country newCountry) {
+        if(newCountry == null){
+            mMediaController.hide();
+            tvDetails.setText("");
+            if(mediaPlayer != null){
+                mediaPlayer.stop();
+                mediaPlayer.reset();
+                mMediaController.hide();
+            }
+            return;
+        }
         tvDetails.setText(newCountry.getDetails());
         if(mediaPlayer!=null)
         {
