@@ -5,4 +5,7 @@
     <string name="delete">Are you sure you want to delete this country?></string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="shownList">Remember countries shown</string>
+    <string name="name">Your name</string>
+    <string name="user">user name</string>
 </resources>

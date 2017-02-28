@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="listColors">
+        <item>Light green</item>
+        <item>Blue sky</item>
+        <item>Deep purple</item>
+        <item>Orange</item>
+    </string-array>
+
+    <string-array name="listColorsValues">
+        <item>#d3e992</item>
+        <item>#6dcaec</item>
+        <item>#b368d9</item>
+        <item>#ff5f5f</item>
+    </string-array>
+
+</resources>

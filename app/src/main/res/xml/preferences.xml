@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:title="@string/shownList"
+        android:key="toSaveList" />
+
+    <EditTextPreference
+        android:defaultValue="Default value"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="@string/name"
+        android:key="@string/user" />
+
+    <ListPreference
+        android:defaultValue="1"
+        android:title="List preference"
+        android:entries="@array/listColors"
+        android:entryValues="@array/listColors"
+        android:key="list_preference_1" />
+</PreferenceScreen>
