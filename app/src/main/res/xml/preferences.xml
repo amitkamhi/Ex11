@@ -15,8 +15,23 @@
 
     <ListPreference
         android:defaultValue="1"
-        android:title="List preference"
+        android:title="background color"
         android:entries="@array/listColors"
-        android:entryValues="@array/listColors"
-        android:key="list_preference_1" />
+        android:entryValues="@array/listColorsValues"
+        android:key="backColor"
+        android:summary="@string/Summary_backColor"/>
+
+    <PreferenceScreen
+        android:title="Advanced setting">
+        <PreferenceCategory
+            android:title="load options">
+        <CheckBoxPreference
+            android:key="refreshOnStart"
+            android:title="@string/title_refreshOnStart"
+            android:summary="@string/summary_refreshOnStart"
+            android:defaultValue="false"/>
+        </PreferenceCategory>
+        </PreferenceScreen>
+
+
 </PreferenceScreen>

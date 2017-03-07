@@ -5,6 +5,7 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.preference.PreferenceFragment;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -29,6 +30,11 @@ public class MainActivity extends Activity implements ItemsFragment.Countryselec
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.action_settings:
+                getFragmentManager().beginTransaction().add(android.R.id.content, new MyPrefernces()).addToBackStack(null).commit();
+                return true;
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -113,6 +119,15 @@ public class MainActivity extends Activity implements ItemsFragment.Countryselec
             else{
                 iFragment.setMenuState(true);
             }
+        }
+    }
+
+    public static class MyPrefernces extends PreferenceFragment{
+
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            addPreferencesFromResource(R.xml.preferences);
         }
     }
 }

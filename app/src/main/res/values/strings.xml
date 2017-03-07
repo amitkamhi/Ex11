@@ -8,4 +8,8 @@
     <string name="shownList">Remember countries shown</string>
     <string name="name">Your name</string>
     <string name="user">user name</string>
+    <string name="Summary_backColor">This is the background color of \'details\' screen. \n Current value: %s</string>
+    <string name="title_refreshOnStart">Refresh data when application starts</string>
+    <string name="summary_refreshOnStart">The countries data will be automatically refreshed from the web upon starting the application</string>
+
 </resources>
