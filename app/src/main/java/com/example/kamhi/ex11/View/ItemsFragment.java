@@ -2,7 +2,9 @@ package com.example.kamhi.ex11.View;
 
 import android.app.ListFragment;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -19,6 +21,8 @@ import com.example.kamhi.ex11.R;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by Kamhi on 3/1/2017.
@@ -35,11 +39,10 @@ public class ItemsFragment extends ListFragment implements MyDialog.ResultsListe
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         this.context = getActivity();
-        if (savedInstanceState != null){
-            countries = savedInstanceState.getStringArrayList("shownCountries");
-        }
-        else if (countries == null){
-            countries = new ArrayList<String>();
+        if (savedInstanceState == null){
+            //countries = savedInstanceState.getStringArrayList("shownCountries");
+            SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
+            ItemsFragment.countries = new ArrayList<String>(sp.getStringSet("shown", new HashSet<String>()));
         }
         try {
             this.listener = (CountryselectList) getActivity();
@@ -85,10 +88,28 @@ public class ItemsFragment extends ListFragment implements MyDialog.ResultsListe
 
     }
 
+
     @Override
     public void onSaveInstanceState(Bundle outState) {
         outState.putStringArrayList("shownCountries", countries);
         super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onDestroy() {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        SharedPreferences.Editor editor = sp.edit();
+        boolean toSaveList = sp.getBoolean("toSaveList", false);
+        if(toSaveList){
+            Set<String> set = new HashSet<String>();
+            set.addAll(countries);
+            editor.putStringSet("shown", set);
+        }
+        else{
+            editor.remove("shown");
+            //countries.clear();
+        }
+        super.onDestroy();
     }
 
     @Override
@@ -139,8 +160,7 @@ public class ItemsFragment extends ListFragment implements MyDialog.ResultsListe
             case MyDialog.ADD:
                 adapter.addNewCountry(result.toString());
                 break;
-            case MyDialog.EXIT_DIALOG:
-                break;
+
         }
     }
 

@@ -6,8 +6,11 @@ import android.app.FragmentTransaction;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.example.kamhi.ex11.Model.Country;
 import com.example.kamhi.ex11.R;
@@ -33,6 +36,9 @@ public class MainActivity extends Activity implements ItemsFragment.Countryselec
         switch (item.getItemId()){
             case R.id.action_settings:
                 getFragmentManager().beginTransaction().add(android.R.id.content, new MyPrefernces()).addToBackStack(null).commit();
+                return true;
+            case R.id.action_exit:
+                MyDialog.newInstance(MyDialog.EXIT).show(getFragmentManager(), "exit dialog");
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -106,6 +112,13 @@ public class MainActivity extends Activity implements ItemsFragment.Countryselec
 
     @Override
     public void OnfinishDialog(int requestCode, Object result) {
+        switch(requestCode)
+        {
+            case MyDialog.EXIT: {
+                finish();
+                break;
+            }
+        }
 
     }
 
@@ -129,5 +142,14 @@ public class MainActivity extends Activity implements ItemsFragment.Countryselec
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.preferences);
         }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+            View view = super.onCreateView(inflater, container, savedInstanceState);
+            view.setBackgroundColor(getResources().getColor(android.R.color.holo_blue_bright));
+            return view;
+        }
     }
+
+
 }

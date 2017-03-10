@@ -2,10 +2,13 @@ package com.example.kamhi.ex11.View;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -67,6 +70,15 @@ public class DetailsFragment extends Fragment{
             }
         });
         super.onViewCreated(view, savedInstanceState);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
+        String bgColor = sp.getString("backColor", "#ff6783");
+        ((View)this.tvDetails.getParent()).setBackgroundColor(Color.parseColor(bgColor));
     }
 
     @Override

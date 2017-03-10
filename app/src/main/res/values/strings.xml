@@ -11,5 +11,7 @@
     <string name="Summary_backColor">This is the background color of \'details\' screen. \n Current value: %s</string>
     <string name="title_refreshOnStart">Refresh data when application starts</string>
     <string name="summary_refreshOnStart">The countries data will be automatically refreshed from the web upon starting the application</string>
-
+    <string name="closing">Are you sure?</string>
+    <string name="add">Add new</string>
+    <string name="host">Hosting activity must imlements the interface ResultListerner</string>
 </resources>

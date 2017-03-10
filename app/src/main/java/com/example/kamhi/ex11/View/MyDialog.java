@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -20,7 +21,7 @@ import com.example.kamhi.ex11.R;
 public class MyDialog extends DialogFragment {
 
     private int requestCode;
-    final public static int EXIT_DIALOG = 1;
+    final public static int EXIT = 3;
     final public static int ADD = 2;
     private ResultsListener listener;
     final String[] selected=new String[1];
@@ -28,15 +29,12 @@ public class MyDialog extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         this.requestCode = getArguments().getInt("requestCode");
-        if(requestCode==EXIT_DIALOG) {
-            return buildsExitDialog().create();
-        }
-        else if(this.requestCode == ADD){
+        if(this.requestCode == ADD){
             return buildSpinnerDialog().create();
         }
         else
         {
-            return null;
+            return buildsExitDialog().create();
         }
     }
 
@@ -68,6 +66,25 @@ public class MyDialog extends DialogFragment {
         fragment.setArguments(args);
         return fragment;
     }
+
+    /*private AlertDialog.Builder buildExitDialog() {
+       Log.d("ex11", "MyDialog buildExitDialog");
+        return new AlertDialog.Builder(getActivity())
+                .setTitle(R.string.closing)
+                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        listener.OnfinishDialog(requestCode, "ok");
+
+                    }
+                })
+                .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dismiss();
+                    }
+                });
+    }*/
 
     private AlertDialog.Builder buildsExitDialog(){
         return new AlertDialog.Builder(getActivity())
