@@ -109,6 +109,7 @@ public class ItemsFragment extends ListFragment implements MyDialog.ResultsListe
             editor.remove("shown");
             //countries.clear();
         }
+        editor.commit();
         super.onDestroy();
     }
 

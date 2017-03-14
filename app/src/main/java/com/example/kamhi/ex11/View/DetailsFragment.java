@@ -88,7 +88,6 @@ public class DetailsFragment extends Fragment{
     //changeTo
     public void changeTo(Country newCountry) {
         if(newCountry == null){
-            mMediaController.hide();
             tvDetails.setText("");
             if(mediaPlayer != null){
                 mediaPlayer.stop();
@@ -97,19 +96,19 @@ public class DetailsFragment extends Fragment{
             }
             return;
         }
-        tvDetails.setText(newCountry.getDetails());
-        if(mediaPlayer!=null)
-        {
-            mediaPlayer.reset();
+        else {
+            tvDetails.setText(newCountry.getDetails());
+            if (mediaPlayer != null) {
+                mediaPlayer.reset();
+            }
+            int songResource = getResources().getIdentifier(newCountry.getAnthem(), "raw", getActivity().getPackageName());
+            mediaPlayer = MediaPlayer.create(getActivity(), songResource);
+            mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+            mMediaController = new MediaController(getActivity());
+            mMediaController.setAnchorView(tvDetails);
+            mMediaController.setMediaPlayer(new MusicCotrol());
+            mediaPlayer.start();
         }
-        int songResource = getResources().getIdentifier(newCountry.getAnthem(), "raw", getActivity().getPackageName());
-        mediaPlayer = MediaPlayer.create(getActivity(), songResource);
-        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-        mMediaController = new MediaController(getActivity());
-        mMediaController.setAnchorView(tvDetails);
-        mMediaController.setMediaPlayer(new MusicCotrol());
-        mediaPlayer.start();
-
 /*
         mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override

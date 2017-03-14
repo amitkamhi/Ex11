@@ -3,14 +3,17 @@ package com.example.kamhi.ex11.View;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.kamhi.ex11.Model.Country;
 import com.example.kamhi.ex11.R;
@@ -48,8 +51,12 @@ public class MainActivity extends Activity implements ItemsFragment.Countryselec
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        if(savedInstanceState != null){
+        if(savedInstanceState == null){
+            SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+            String user = sp.getString("userName", "guest");
+            Toast.makeText(this, "Hello " + user, Toast.LENGTH_LONG).show();
+        }
+        else{
             position = savedInstanceState.getInt("position");
         }
 
